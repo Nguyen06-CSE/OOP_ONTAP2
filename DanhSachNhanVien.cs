@@ -46,9 +46,20 @@ namespace ThucHanh1
 
             INhanVien nhanVien = new QuanLy(ho, id, phong, ten, nhiemVu, luong);
             return nhanVien;
-
-            
         }
+
+        public DanhSachNhanVien NhapThuCongDanhSachNhanVien(int n)
+        {
+            DanhSachNhanVien res = new DanhSachNhanVien();
+            for(int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"nhap nhan vien thu {i + 1}: ");
+                var tmp = NhapThongTinNhanVien();
+                res.ThemNhanVien(tmp);
+            }
+            return res;
+        }
+
         public void DocTuFile(string tenFle)
         {
             if (!File.Exists(tenFle))
@@ -98,16 +109,16 @@ namespace ThucHanh1
             Console.WriteLine("da ghi du lieu ra file thanh cong");
         }
 
-        public INhanVien TimNhanVienTheoMaID(int id)
+        public int TimNhanVienTheoMaID(int id)
         {
-            foreach(var item in collection)
+            for(int i = 0; i < collection.Count; i++)
             {
-                if(item is INhanVien nv && nv.NhanVienID == id)
+                if (collection[i].NhanVienID == i)
                 {
-                    return nv;
+                    return i;
                 }
             }
-            return null;
+            return -1;
         }
 
         public DanhSachNhanVien TimNhanVienTheoTen(string Ten)
@@ -157,13 +168,13 @@ namespace ThucHanh1
         public void XoaNhanVienTheoID(int id)
         {
             var nv = TimNhanVienTheoMaID(id);
-            if(nv == null)
+            if(nv == -1)
             {
                 Console.WriteLine("nhan vien nay ko co trong danh sach");
             }
             else
             {
-                collection.Remove(nv);
+                collection.RemoveAt(nv);
             }
         }
 
@@ -253,19 +264,59 @@ namespace ThucHanh1
             }
         }
 
-        public void SuaTenNhanVien(string newTen, int id)
+        public void SapXepTheoTenNeuTrungSapTheoHo()
         {
-            INhanVien nv = TimNhanVienTheoMaID(id);
+            for (int i = 0; i < collection.Count - 1; i++)
+            {
+                for (int j = i + 1; j < collection.Count; j++)
+                {
+                    if (collection[i] is INguoi nguoi1 && collection[j] is INguoi nguoi2)
+                    {
+                        if (string.Compare(nguoi1.Ten, nguoi2.Ten) > 0 ||
+                            (string.Compare(nguoi1.Ten, nguoi2.Ten) == 0 && string.Compare(nguoi1.Ho, nguoi2.Ho) > 0))
+                        {
+                            Swap(i, j, collection);
+                        }
+                    }
+                }
+            }
+        }
 
-            if (nv == null)
+
+        public void SuaThongTinNhanVien(int id, string ho ="", string ten ="",string phong ="" )
+        {
+            var location = TimNhanVienTheoMaID(id);
+
+            if (location == -1)
             {
                 Console.WriteLine($"Không tìm thấy nhân viên với ID: {id}");
                 return;
             }
 
-            if (nv is INguoi nguoi)
+            if(ho != null || ho != "" )
             {
-                nguoi.Ten = newTen;
+                if (collection[location] is INguoi nguoi)
+                {
+                    nguoi.Ho = ho;
+                }
+            }
+
+
+            if (ten != null || ten != "")
+            {
+                if (collection[location] is INguoi nguoi)
+                {
+                    nguoi.Ten = ten;
+                }
+            }
+
+
+            if (phong != null || phong != "")
+            {
+                if (collection[location] is INhanVien nv)
+                {
+                    nv.Phong = phong;
+                }
             }
 
             Console.WriteLine("Đã cập nhật thông tin nhân viên.");
@@ -273,17 +324,20 @@ namespace ThucHanh1
 
         public void SuaHoNhanVien(string newHo, int id)
         {
-            INhanVien nv = TimNhanVienTheoMaID(id);
+            var location = TimNhanVienTheoMaID(id);
 
-            if (nv == null)
+            if (location == -1)
             {
                 Console.WriteLine($"Không tìm thấy nhân viên với ID: {id}");
                 return;
             }
 
-            if (nv is INguoi nguoi)
+            else
             {
-                nguoi.Ho = newHo;
+                if (collection[location] is INguoi nguoi)
+                {
+                    nguoi.Ho = newHo;
+                }
             }
 
             Console.WriteLine("Đã cập nhật thông tin nhân viên.");
@@ -291,15 +345,21 @@ namespace ThucHanh1
 
         public void SuaPhongNhanVien(string newPhong, int id)
         {
-            INhanVien nv = TimNhanVienTheoMaID(id);
+            var location = TimNhanVienTheoMaID(id);
 
-            if (nv == null)
+            if (location == -1)
             {
                 Console.WriteLine($"Không tìm thấy nhân viên với ID: {id}");
                 return;
             }
 
-            nv.Phong = newPhong;
+            else
+            {
+                if (collection[location] is INhanVien nv)
+                {
+                   nv.Phong = newPhong;
+                }
+            }
 
             Console.WriteLine("Đã cập nhật thông tin nhân viên.");
         }
@@ -366,6 +426,27 @@ namespace ThucHanh1
                 result += nv.Luong;
             }
             return result;
+        }
+
+        public void TangLuongChoNhanVien(int id, double phanTramTang)
+        {
+            foreach(var item in collection)
+            {
+                if(item.NhanVienID == id && item is QuanLy ql)
+                {
+                    item.Luong = ql.TangLuong(phanTramTang);
+                    break;
+                }
+            }
+        }
+
+        public void HienThiLuongCuaTatCaNhanVien()
+        {
+            foreach(var item in collection)
+            {
+                var tmp = (QuanLy)item;
+                tmp.HienThiLuong();
+            }
         }
 
 

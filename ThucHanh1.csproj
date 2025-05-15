@@ -44,8 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DanhSachNhanVien.cs" />
+    <Compile Include="IBaoCao.cs" />
+    <Compile Include="IKhaNangQuanLy.cs" />
     <Compile Include="INguoi.cs" />
     <Compile Include="INhanVien.cs" />
+    <Compile Include="IQuanLyLuong.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuanLy.cs" />

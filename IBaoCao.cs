@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThucHanh1
 {
-    internal class IBaoCao
+    public interface IBaoCao
     {
+        string TaoBaoCao();
     }
 }

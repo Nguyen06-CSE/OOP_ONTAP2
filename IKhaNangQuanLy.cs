@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThucHanh1
 {
-    internal class IKhaNangQuanLy
+    public interface IKhaNangQuanLy
     {
+        void GanNhiemVu(string nhiemVu);
     }
 }

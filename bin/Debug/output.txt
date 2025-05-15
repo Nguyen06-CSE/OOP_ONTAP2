@@ -1,0 +1,14 @@
+ID: 1, Phong: KeToan, Ho: Nguyen, Ten: Anh, Nhiem vu TiepNhan, luong 1500.5
+ID: 2, Phong: NhanSu, Ho: Tran, Ten: Binh, Nhiem vu TuyenDung, luong 1800
+ID: 3, Phong: KinhDoanh, Ho: Le, Ten: Chi, Nhiem vu BanHang, luong 2200.75
+ID: 4, Phong: IT, Ho: Pham, Ten: Duy, Nhiem vu HoTro, luong 2500
+ID: 5, Phong: KeToan, Ho: Hoang, Ten: Giang, Nhiem vu KeToanTongHop, luong 1700
+ID: 6, Phong: NhanSu, Ho: Do, Ten: Hoa, Nhiem vu DaoTao, luong 1900.25
+ID: 7, Phong: KinhDoanh, Ho: Vo, Ten: Hieu, Nhiem vu PhatTrienThiTruong, luong 2300
+ID: 8, Phong: IT, Ho: Bui, Ten: Khanh, Nhiem vu LapTrinh, luong 2700
+ID: 9, Phong: KeToan, Ho: Dang, Ten: Lan, Nhiem vu KeToanNoiBo, luong 1600
+ID: 10, Phong: NhanSu, Ho: Ngo, Ten: Linh, Nhiem vu QuanLyNhanSu, luong 2100
+ID: 11, Phong: KinhDoanh, Ho: Duong, Ten: Minh, Nhiem vu Marketing, luong 2400
+ID: 12, Phong: IT, Ho: Ly, Ten: Ngoc, Nhiem vu QuanTriHeThong, luong 2600.5
+ID: 13, Phong: KeToan, Ho: Dinh, Ten: Phuc, Nhiem vu ThuNgan, luong 1550
+ID: 14, Phong: NhanSu, Ho: Cao, Ten: 

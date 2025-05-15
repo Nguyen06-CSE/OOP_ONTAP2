@@ -22,7 +22,7 @@ namespace ThucHanh1
             collection.Add(nv);
         }
 
-        public void NhapThongTinNhanVien()
+        public INhanVien NhapThongTinNhanVien()
         {
             Console.WriteLine("=== NHAP THONG TIN NHAN VIEN ===");
 
@@ -38,10 +38,16 @@ namespace ThucHanh1
             Console.Write("nhap ten: ");
             string ten = Console.ReadLine();
 
-            INhanVien nhanVien = new QuanLy(ho, id, phong, ten);
-            ThemNhanVien(nhanVien);
+            Console.WriteLine("nhap nhiem vu: ");
+            string nhiemVu = Console.ReadLine();
 
-            Console.WriteLine("thanh cong!\n");
+            Console.WriteLine("nhap luong: ");
+            double luong = double.Parse(Console.ReadLine());
+
+            INhanVien nhanVien = new QuanLy(ho, id, phong, ten, nhiemVu, luong);
+            return nhanVien;
+
+            
         }
         public void DocTuFile(string tenFle)
         {
@@ -61,8 +67,10 @@ namespace ThucHanh1
                 int nhanVienID = int.Parse(part[1]);
                 string phong = part[2];
                 string ten = part[3];
+                string nhienVu = part[4];
+                double luong = double.Parse(part[5]);
 
-                INhanVien nv = new QuanLy(ho, nhanVienID, phong, ten);
+                INhanVien nv = new QuanLy(ho, nhanVienID, phong, ten, nhienVu,luong);
                 collection.Add(nv);
             }
         }
@@ -79,17 +87,15 @@ namespace ThucHanh1
         {
             StreamWriter sw = new StreamWriter(tenFile);
             
-                foreach (INhanVien nv in collection)
+                foreach (var item in collection)
                 {
-                    if (nv is INguoi nguoi)
-                    {
-                        string line = $"{nguoi.Ho},{nv.NhanVienID},{nv.Phong},{nguoi.Ten}";
-                        sw.WriteLine(line);
-                    }
+                    
+                        sw.WriteLine(item);
+                    
                 }
             
 
-            Console.WriteLine("Đã ghi dữ liệu ra file thành công.");
+            Console.WriteLine("da ghi du lieu ra file thanh cong");
         }
 
         public INhanVien TimNhanVienTheoMaID(int id)
@@ -247,7 +253,25 @@ namespace ThucHanh1
             }
         }
 
-        public void SuaThongTinNhanVien(int id, string newHo, string newTen, string newPhong)
+        public void SuaTenNhanVien(string newTen, int id)
+        {
+            INhanVien nv = TimNhanVienTheoMaID(id);
+
+            if (nv == null)
+            {
+                Console.WriteLine($"Không tìm thấy nhân viên với ID: {id}");
+                return;
+            }
+
+            if (nv is INguoi nguoi)
+            {
+                nguoi.Ten = newTen;
+            }
+
+            Console.WriteLine("Đã cập nhật thông tin nhân viên.");
+        }
+
+        public void SuaHoNhanVien(string newHo, int id)
         {
             INhanVien nv = TimNhanVienTheoMaID(id);
 
@@ -260,13 +284,90 @@ namespace ThucHanh1
             if (nv is INguoi nguoi)
             {
                 nguoi.Ho = newHo;
-                nguoi.Ten = newTen;
+            }
+
+            Console.WriteLine("Đã cập nhật thông tin nhân viên.");
+        }
+
+        public void SuaPhongNhanVien(string newPhong, int id)
+        {
+            INhanVien nv = TimNhanVienTheoMaID(id);
+
+            if (nv == null)
+            {
+                Console.WriteLine($"Không tìm thấy nhân viên với ID: {id}");
+                return;
             }
 
             nv.Phong = newPhong;
 
             Console.WriteLine("Đã cập nhật thông tin nhân viên.");
         }
+
+        //public void SuaThongTinNhanVien(int id, string newHo, string newTen, string newPhong)
+        //{
+        //    Console.WriteLine("nhap thong tin ban muon sua:(1)Ten, (2)Ho, (3)Phong");
+        //    int n = int.Parse(Console.ReadLine());
+        //    string ten, ho, phong;
+        //    int idTim;
+        //    Console.WriteLine("nhap id cua nhan vien ban muon sua thong tin: ");
+        //    idTim = int.Parse(Console.ReadLine());
+        //    switch (n)
+        //    {
+        //        case 1:
+
+        //            Console.WriteLine("nhap ten moi ban muon doi: ");
+        //            ten = Console.ReadLine();
+
+        //            SuaTenNhanVien(ten, idTim);
+        //        break;
+        //        case 2:
+
+        //            Console.WriteLine("nhap ho moi ban muon doi: ");
+        //            ho = Console.ReadLine();
+
+        //            SuaHoNhanVien(ho, idTim);
+        //            break;
+        //        case 3:
+
+        //            Console.WriteLine("nhap phong moi ban muon doi: ");
+        //            phong = Console.ReadLine();
+
+        //            SuaPhongNhanVien(phong, idTim);
+        //            break;
+        //    }
+        //}
+
+        public void TimKiemTheoTenChuaTuKhoa(string tuKhoa)
+        {
+            bool timThay = false;
+            Console.WriteLine($"Danh sách nhân viên có tên chứa từ khóa '{tuKhoa}':");
+
+            foreach (var nv in collection)
+            {
+                if ( nv is INguoi nguoi && nguoi.Ten.ToLower().Contains(tuKhoa.ToLower()))
+                {
+                    Console.WriteLine(nv.LayThongTinChiTiet());
+                    timThay = true;
+                }
+            }
+
+            if (!timThay)
+            {
+                Console.WriteLine("ko tim thay nhan vien co ten thich hop voi tu khoa: " + tuKhoa);
+            }
+        }
+
+        public double TinhTongLuongCuaNhanVien()
+        {
+            double result = 0;
+            foreach(var nv in collection)
+            {
+                result += nv.Luong;
+            }
+            return result;
+        }
+
 
     }
 }

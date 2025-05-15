@@ -10,8 +10,8 @@ namespace ThucHanh1
     {
         int NhanVienID { get; set; }
         string Phong {  get; set; }
-
-
+        double Luong {  get; set; }
+        void GanNhiemVu(string nhiemVu);
         string LayThongTinChiTiet();
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThucHanh1
 {
-    internal class IQuanLyLuong
+    public interface IQuanLyLuong
     {
+        double TangLuong(double phanTram);
     }
 }
